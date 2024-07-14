@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -16,15 +15,19 @@ import React, { useState } from 'react';
 import TextInput from '@/components/TextInput';
 import BaseButton from '@/components/BaseButton';
 import IconButton from '@/components/IconButton';
+import { useNavigation } from '@react-navigation/native';
+
+
 library.add(fab, far, fas)
 
 export default function IndexScreen({ }) {
-  const { control, handleSubmit, formState: { errors } } = useForm();
-  const [submittedData, setSubmittedData] = useState(null);
+  const navigation = useNavigation();
+  // const { control, handleSubmit, formState: { errors } } = useForm();
+  // const [submittedData, setSubmittedData] = useState(null);
   const onSubmit = (data: any) => {
     // Simulate form submission
     console.log('Submitted Data:', data);
-    setSubmittedData(data);
+    navigation.navigate('(tabs)')
   };
 
   return (
@@ -58,13 +61,13 @@ export default function IndexScreen({ }) {
       <View style={styles.buttonsContainer}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 30 }}>
           <View style={{ width: '80%', minHeight: 100, paddingEnd: 7 }}>
-            <BaseButton>
+            <BaseButton onPress={onSubmit}>
               Entrar
             </BaseButton>
           </View>
           <View style={{ width: '20%', minHeight: 100 }}>
             <IconButton>
-              <FontAwesomeIcon icon="flag" color="#FFFFFF" style={{ padding:0, margin:0, maxWidth:10 }} />
+              <FontAwesomeIcon icon="flag" color="#FFFFFF" style={{ padding: 0, margin: 0, maxWidth: 10 }} />
             </IconButton>
           </View>
         </View>
@@ -78,8 +81,13 @@ export default function IndexScreen({ }) {
   );
 }
 
-
 const styles = StyleSheet.create({
+  container: {
+    top: 170,
+    left: 38,
+    maxWidth: '80%',
+    gap: 40
+  },
   image: {
     maxWidth: 190,
     height: 52,
@@ -98,12 +106,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 19.1,
     marginBottom: 0
-  },
-  container: {
-    top: 170,
-    left: 38,
-    maxWidth: '80%',
-    gap: 40
   },
   buttonsContainer: {
     flex: 1

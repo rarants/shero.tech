@@ -37,7 +37,6 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <FontAwesomeIcon icon="house" color={focused ? '#FFD7EB' : '#D4D4D4'} />
             ),
-            /* tabBarStyle: { borderRightColor: '#D4D4D4' borderRightWidth: '1px solid' } */
           }}
         />
         {/* Aulas/Conteúdo */}

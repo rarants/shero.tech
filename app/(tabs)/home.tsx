@@ -1,77 +1,134 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+  Image,
+  View,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import TextInput from '@/components/TextInput';
+import BaseButton from '@/components/BaseButton';
+import IconButton from '@/components/IconButton';
+import { Avatar, Card, Text } from 'react-native-paper';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
 library.add(fab, far, fas)
-
 export default function HomeScreen() {
+  const [cards, setCards] = useState([
+    {
+      title: 'Inteligência Artificial',
+      duration: 35,
+      primaryColor: '#1CB0F6',
+      imageUrl: require('@/assets/images/1-Photoroom.png')
+    },
+    {
+      title: 'Ciência de Dados',
+      duration: 45,
+      primaryColor: '#E06FA9',
+      imageUrl: require('@/assets/images/2-Photoroom.png')
+    },
+    {
+      title: 'Empreendedorismo Feminino',
+      duration: 30,
+      primaryColor: '#FDD32C',
+      imageUrl: require('@/assets/images/3-Photoroom.png')
+    },
+    {
+      title: 'Desenvolvimento',
+      duration: 47,
+      primaryColor: '#77A14B',
+      imageUrl: require('@/assets/images/4-Photoroom.png')
+    },
+    {
+      title: 'Marketing Digital',
+      duration: 39,
+      primaryColor: '#F39200',
+      imageUrl: require('@/assets/images/5-Photoroom.png')
+    }
+  ])
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello World!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/home.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tabs to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.label}>Meus Cursos</Text>
+          {cards.map((el, index) =>
+            <Card style={{ ...styles.card, backgroundColor: el.primaryColor }} key={'card-' + index}>
+              <View style={{ minWidth: '100%', position: 'relative' }}>
+                <ImageBackground
+                  source={el.imageUrl}
+                  style= {{ padding: 20 }}
+                  imageStyle={{
+                    resizeMode: "contain",
+                    alignSelf: "flex-end",
+                    left: 150,
+                    position: 'absolute'
+                  }}
+                >
+                  <View style={{ width: '100%', minHeight: 100, paddingEnd: 7 }}>
+                    <Text style={styles.title}>{el.title}</Text>
+                    <Text style={styles.subtitle}>{el.duration > 1 ? 'horas' : 'hora'}</Text>
+                    <BaseButton style={styles.baseButton} labelStyle={{ ...styles.labelStyle, color: el.primaryColor }}>Acessar</BaseButton>
+                  </View>
+                </ImageBackground>
+              </View>
+            </Card>
+          )}
+        </View>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    top: 80,
+    left: 20,
+    maxWidth: '90%'
+  },
+  label: {
+    fontSize: 16,
+    lineHeight: 21.82,
+    marginBottom: 20
+  },
+  card: {
+    display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    marginBottom: 25
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 700,
+    lineHeight: 21.82,
+    marginVertical: 15
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  subtitle: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: 16.37,
+    marginBottom: 40
   },
+  baseButton: {
+    backgroundColor: '#FFFFFF',
+    width: '50%',
+    borderRadius: 50,
+    padding: 0,
+  },
+  labelStyle: {
+    fontWeight: 700,
+    fontSize: 12,
+    lineHeight: 16.37,
+    color: '#1CB0F6'
+  }
 });
+
