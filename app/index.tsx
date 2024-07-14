@@ -17,7 +17,6 @@ import BaseButton from '@/components/BaseButton';
 import IconButton from '@/components/IconButton';
 import { useNavigation } from '@react-navigation/native';
 
-
 library.add(fab, far, fas)
 
 export default function IndexScreen({ }) {
